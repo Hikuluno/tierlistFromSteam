@@ -1,6 +1,8 @@
 import requests
 import configparser
 import os
+import shutil
+
 
 # Read the configuration file
 config = configparser.ConfigParser()
@@ -30,7 +32,12 @@ params = {
 
 # Directory to save images
 output_directory = "steam_images"
+# Ensure the output directory exists and is empty
+if os.path.exists(output_directory):
+    # Remove all files in the directory
+    shutil.rmtree(output_directory)
 os.makedirs(output_directory, exist_ok=True)
+
 
 # Make the initial request to get the list of games
 response = requests.get(games_url, params=params)
